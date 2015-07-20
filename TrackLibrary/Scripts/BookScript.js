@@ -51,7 +51,7 @@ function bookFilter(url,key) {
         $("#shelf").html("");
         $.each(data, function (index, entity) {
             $("#shelf").append("<li>" +
-                "<div class='book-element'> " +
+                "<div class='book-element' data-book='"+entity.Book+"' data-author='"+entity.AuthorName+"' data-pages='"+entity.Pages+"' data-isbn='"+entity.Isbn+"'> " +
                 "<img class='image-preview' onclick='ShowModal(this);' src='" + entity.Thumb + "' />" +
                  "<label>" + entity.Book + "</label>" +
                "</div>" +

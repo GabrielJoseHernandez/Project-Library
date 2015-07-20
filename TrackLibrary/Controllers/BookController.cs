@@ -16,18 +16,28 @@ namespace TrackLibrary.Controllers
 
         public FileContentResult ReturnBookInPdf(string isbn)
         {
-            var bytes = new BookManager().GetPdf(Convert.ToInt64(isbn));
-
-            const string mimeType = "application/pdf";
-
-            var content = new System.Net.Mime.ContentDisposition
+            try
             {
-                FileName = "Test.pdf",
-                Inline = true
-            };
 
-            Response.AppendHeader("Content-Disposition", content.ToString());
-            return File(bytes, mimeType);
+                var bytes = new BookManager().GetPdf(Convert.ToInt64(isbn));
+
+                const string mimeType = "application/pdf";
+
+                var content = new System.Net.Mime.ContentDisposition
+                {
+                    FileName = "Test.pdf",
+                    Inline = true
+                };
+
+                Response.AppendHeader("Content-Disposition", content.ToString());
+                return File(bytes, mimeType);
+            }
+            catch (Exception)
+            {
+                return null;
+               
+
+            }
         }
 
         public JsonResult BookByAuthor(string filterKey)
