@@ -10,21 +10,31 @@ namespace Library.Core
     {
         public IEnumerable<BookPreviewDto> GetAllBooks()
         {
-            IEnumerable<BookPreviewDto> result;
-            using (var context = new LibraryDatabaseEntities())
+            try
             {
-                List<BookPreviewDto> listBook = (from b in context.Book
-                                                 select new BookPreviewDto
-                                                 {
-                                                     Isbn = b.ISBN,
-                                                     Book = b.Book_Name,
-                                                     Thumb = string.IsNullOrEmpty(b.Imagen) ? "/Assets/Images/notAvailable.jpg" : b.Imagen,
-                                                     AuthorName = b.Author.Author_Name + " " + b.Author.Author_LastName,
-                                                     Pages = (short)b.Quantity_Page
-                                                 }).ToList<BookPreviewDto>();
-                result = listBook;
+                IEnumerable<BookPreviewDto> result;
+                using (var context = new LibraryDatabaseEntities())
+                {
+                    List<BookPreviewDto> listBook = (from b in context.Book
+                                                     select new BookPreviewDto
+                                                     {
+                                                         Isbn = b.ISBN,
+                                                         Book = b.Book_Name,
+                                                         Thumb = string.IsNullOrEmpty(b.Imagen) ? "/Assets/Images/notAvailable.jpg" : b.Imagen,
+                                                         AuthorName = b.Author.Author_Name + " " + b.Author.Author_LastName,
+                                                         Pages = (short)b.Quantity_Page
+                                                     }).ToList<BookPreviewDto>();
+                    result = listBook;
+                }
+                return result;
             }
-            return result;
+            catch (Exception)
+            {
+
+                return null;
+            }
+
+
         }
 
         public IEnumerable<Category> GetAllCategory()
