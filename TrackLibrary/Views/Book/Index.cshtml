@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Library.Core.BookPreviewDto>
+<link href="~/Content/pagination-styles.css" rel="stylesheet" />
+
+
+
+
+<div class="row">
+    <div id="PanelLeft">
+        <img src="~/Assets/Images/Library-256.png" />
+        <label>My Private Library</label>
+    </div>
+    <div id="PanelRigth">
+        @* Header *@
+        <div class="row" style="margin:0;">
+            <div class="navigation">
+
+                <label class="navigation-element">Library Track</label>
+
+                <input id="Search" type="text" class="navigation-text navigation-element" placeholder="Search">
+                <button class="navigation-element btn" onclick="SearchBook();">Search</button>
+                <div class="navigation-element">
+                    <input type="radio" name="filter" checked="checked" value="Author" />
+                </div>
+                <label class="navigation-element">Author</label>
+                <div class="navigation-element">
+                    <input type="radio" name="filter" value="Category" />
+                </div>
+                <label class="navigation-element">Category</label>
+
+
+            </div>
+        </div>
+
+        @* Body *@
+        <ul id="shelf" class="paging">
+
+            @foreach (var book in @Model)
+            {
+                <li>
+                    <div class="book-element" data-book="@book.Book" data-author="@book.AuthorName" data-pages="@book.Pages" data-isbn="@book.Isbn">
+                        <img class="image-preview" onclick="ShowModal(this);" src="@book.Thumb" />
+                        <label>@book.Book</label>
+                    </div>
+                </li>
+            }
+
+        </ul>
+    </div>
+
+</div>
+
+
+@* Modal *@
+
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Book Info</h4>
+            </div>
+            <div class="modal-body">
+                <label>Title:</label>&nbsp;<span id="Title"></span><br />
+                <label>Author:</label>&nbsp;<span id="Author"></span><br />
+                <label>Pages:</label>&nbsp;<span id="cant"></span><br />
+                <input type="hidden" id="isbn" />
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" onclick="ShowBook();" class="btn btn-danger">View</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<script src="~/Scripts/quickpager.jquery.js"></script>
+<script src="~/Scripts/BookScript.js"></script>
